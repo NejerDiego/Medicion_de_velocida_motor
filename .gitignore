@@ -1,0 +1,112 @@
+///////////////////////////////DECLARACIÓN DE VARIABLES//////////////////////////////////////////////////////
+int A = 13;
+int B = 12;
+int C = 11;
+int D = 10;
+int motor = 9;
+int valor_cad;
+int unidades = 8;
+int decenas = 7;
+int cont_decena = 0;
+int cont_unidad = 0;
+void setup() {
+  // put your setup code here, to run once:
+  //////////////////////////// DECLARACIÓN DE PUERTOS DE ENTRADA O SALIDA //////////////////////////////////
+  pinMode(motor, OUTPUT);
+  pinMode (A, OUTPUT);
+  pinMode (B, OUTPUT);
+  pinMode (C, OUTPUT);
+  pinMode (D, OUTPUT);
+  pinMode (unidades, OUTPUT);
+  pinMode (decenas, OUTPUT);
+}
+void loop() {
+///////////////////////////// MEDICIÓN DE VELOCIDAD DE UN MOTOR /////////// ///////////////////////////////7
+  
+  valor_cad = analogRead(0);                          /// OBTENCIÓN DE UNA SEÑAL EN BITS///
+  analogWrite(motor,valor_cad/4);                     /// EL CICLO UTIL PARA EL MOVIMIENTO DEL MOTOR/////
+  delay(100);                                         /// RETARDO //////
+  valor_cad = map (valor_cad, 0, 1023, 0, 100);       // CONVERSIÓN DE 0-1023 A 0-99 /////
+  cont_decena = valor_cad / 10;                       // OBTENCIÓN DE LAS DECENAS PARA SER GRAFICADAS EN EL DISPLAY////
+  cont_unidad = valor_cad - (cont_decena * 10);       // OBTENCIÓN DE LAS UNIDADES PARA SER GRAFICADAS EN EL DISPLAT///
+  digitalWrite(unidades, HIGH);                       // PONER EN ALTO EL DISPLAY DE UNIDADES PARA GRAFICAR LA UNIDAD RESPECTIVA ///
+  digitalWrite(decenas, LOW);                         // PONER EL BAJO EL DISPLAY QUE NO VARIA POR EN EL MOMENTO DADO ////
+  dis(cont_unidad);                                   // LLAMAR AL METODO PARA IDENTIFICAR QUE VALOR LOS SEGMENTOS QUE SE VAN A ENCENDER DEL DISPLAY///
+  delay(500);                                         // RETARDO PARA OBSERVAR EL VALOR DEL DISPLAY ///
+  digitalWrite(unidades, LOW);                        // PONER EL BAJO LAS UNIDADES PARA CAMBIAR EL VALOR DE LAS DECENAS SEGUN SEA NECESARIO///
+  digitalWrite(decenas, HIGH);                        
+  dis(cont_decena);                                   // LLAMAR AL METODO PARA IDENTIFICAR QUE VALOR LOS SEGMENTOS QUE SE VAN A ENCENDER DEL DISPLAY///
+  delay(500);                                         // RETARDO//
+}
+void dis (int numero) {                               // MÉTODO PARA ENCENDER LOS SEGMENTOS RESPECTIVOS CON UNA CONDICIÓN //
+  switch (numero) {                                   // COMANDO SWITCH CASE //
+    case 0:
+      digitalWrite(A, LOW);                           /// VALORACIÓN DE DE CADA CASO DESDE LA GRAFICACIÓN DEL DECIMAL 0 A 9 //
+      digitalWrite(B, LOW);
+      digitalWrite(C, LOW);
+      digitalWrite(D, LOW);
+      break;
+    case 1:
+      digitalWrite(A, HIGH);
+      digitalWrite(B, LOW);
+      digitalWrite(C, LOW);
+      digitalWrite(D, LOW);
+      break;
+    case 2:
+      digitalWrite(A, LOW);
+      digitalWrite(B, HIGH);
+      digitalWrite(C, LOW);
+      digitalWrite(D, LOW);
+      break;
+    case 3:
+      digitalWrite(A, HIGH);
+      digitalWrite(B, HIGH);
+      digitalWrite(C, LOW);
+      digitalWrite(D, LOW);
+      break;
+    case 4:
+      digitalWrite(A, LOW);
+      digitalWrite(B, LOW);
+      digitalWrite(C, HIGH);
+      digitalWrite(D, LOW);
+      break;
+
+    case 5:
+
+      digitalWrite(A, HIGH);
+      digitalWrite(B, LOW);
+      digitalWrite(C, HIGH);
+      digitalWrite(D, LOW);
+      break;
+
+
+    case 6:
+      digitalWrite(A, LOW);
+      digitalWrite(B, HIGH);
+      digitalWrite(C, HIGH);
+      digitalWrite(D, LOW);
+      break;
+
+    case 7:
+      digitalWrite(A, HIGH);
+      digitalWrite(B, HIGH);
+      digitalWrite(C, HIGH);
+      digitalWrite(D, LOW);
+      break;
+
+    case 8:
+      digitalWrite(A, LOW);
+      digitalWrite(B, LOW);
+      digitalWrite(C, LOW);
+      digitalWrite(D, HIGH);
+      break;
+
+    case 9:
+      digitalWrite(A, HIGH);
+      digitalWrite(B, LOW);
+      digitalWrite(C, LOW);
+      digitalWrite(D, HIGH);
+      break;
+
+  }
+}
